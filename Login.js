@@ -25,7 +25,7 @@ export default class Login extends Component<{}> {
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this); 
   }
   handleLoginSubmit() {
-    this.setState({ showProgress: true });
+    this.setState({ showProgress: true, badCredentials: false, unknownError: false });
     const { username, password } = this.state;
     const authService = new AuthService();
     authService.login({ username, password }, 

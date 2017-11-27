@@ -31,20 +31,20 @@ export default class App extends Component<{}> {
           <Text style={styles.welcome}>Logged In!!!</Text>
         </View>
       )
-    } else {
-      return (
-        <Login onLogin={this.onLogin} />
-      );
-
     }
+    return (
+      <Login onLogin={this.onLogin} />
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   welcome: {
-
+    fontSize: 30,
   },
 })

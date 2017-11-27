@@ -1,18 +1,14 @@
 import buffer from 'buffer';
 
 export default class AuthService {
-  constructor() {
-
-  }
   encodeCreds(creds) {
     return new buffer.Buffer(creds.username + ':' + creds.password).toString('base64');
   }
   async login(creds, cb) {
-    const encodedAuth = this.encodeCreds(creds);
     try {
       const response = await fetch('https://api.github.com/user', {
         headers: {
-          'Authorization': 'Basic ' + encodedAuth, 
+          'Authorization': 'Basic ' + this.encodeCreds(creds), 
         }
       });
       if (response.status >= 200 && response.status < 300) {
