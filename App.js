@@ -5,11 +5,14 @@
  */
 
 import React, { Component } from 'react';
-import Login from './Login';
+import Login from './screens/Login';
+import AppContainer from './AppContainer';
+import AuthService from './services/AuthService';
 import {
   Text,
   StyleSheet,
   View,
+  ActivityIndicator,
 } from 'react-native';
 
 export default class App extends Component<{}> {
@@ -17,24 +20,47 @@ export default class App extends Component<{}> {
     super();
     this.state = {
       isLoggedIn: false,
+      checkingAuth: true,
     };
     this.onLogin = this.onLogin.bind(this);
   }
+  componentDidMount() {
+    const authService = new AuthService();
+    authService.getAuthInfo((err, authInfo) => {
+      console.log(err, authInfo);
+      if (!err && authInfo !== undefined) {
+        return this.setState({
+          checkingAuth: false,
+          isLoggedIn: authInfo !== null,
+        });
+      }
+      return this.setState({
+        checkingAuth: false,
+        isLoggedIn: false,
+      });
+    });
+  }
   onLogin() {
-    console.log(this.state);
     this.setState({ isLoggedIn: true });
   }
   render() {
-    if (this.state.isLoggedIn) {
+    if (this.state.checkingAuth) {
       return (
         <View style={styles.container}>
-          <Text style={styles.welcome}>Logged In!!!</Text>
+          <ActivityIndicator
+            animating={true}
+            size="large" />
         </View>
+      )
+    }
+    if (this.state.isLoggedIn) {
+      return (
+        <AppContainer />
       )
     }
     return (
       <Login onLogin={this.onLogin} />
-    );
+    )
   }
 }
 

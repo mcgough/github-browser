@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from './AuthService';
+import AuthService from './../services/AuthService';
 import {
   Text,
   StyleSheet,
@@ -30,6 +30,7 @@ export default class Login extends Component<{}> {
     const authService = new AuthService();
     authService.login({ username, password }, 
       (results) => {
+        console.log('results',results);
         this.setState(Object.assign({
           showProgress: false
         }, results));
@@ -54,7 +55,7 @@ export default class Login extends Component<{}> {
     return (
       <View style={styles.container}>
         <Image style={styles.logo}
-          source={require('./assets/img/octocat.png')} />
+          source={require('./../assets/img/octocat.png')} />
         <Text style={styles.heading}>Github Browser</Text>
         <TextInput style={styles.input}
           onChangeText={(text) => this.setState({ username: text })}
@@ -62,7 +63,7 @@ export default class Login extends Component<{}> {
         <TextInput style={styles.input}
           onChangeText={(text) => this.setState({ password: text })}
           placeholder="Github Password"
-          secureTextEntry="true" />
+          secureTextEntry={true} />
         <TouchableHighlight 
           onPress={this.handleLoginSubmit}
           style={styles.button}>
