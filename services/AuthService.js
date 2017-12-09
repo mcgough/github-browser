@@ -19,7 +19,6 @@ export default class AuthService {
     if (!zippedObject[this.authKey]) {
       return cb();
     }
-    console.log(zippedObject);
     const authInfo = {
       header: {
         Authorization: 'Basic ' + zippedObject[this.authKey],

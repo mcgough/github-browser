@@ -27,7 +27,6 @@ export default class App extends Component<{}> {
   componentDidMount() {
     const authService = new AuthService();
     authService.getAuthInfo((err, authInfo) => {
-      console.log(err, authInfo);
       if (!err && authInfo !== undefined) {
         return this.setState({
           checkingAuth: false,
